@@ -96,8 +96,8 @@ namespace YAPA
 
             ShowInTaskbar = Properties.Settings.Default.ShowInTaskbar;
 
-            WorkTrayIconColor = (System.Drawing.Color)System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.WorkTrayIconColor);
-            BreakTrayIconColor = (System.Drawing.Color)System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.BreakTrayIconColor);
+            WorkTrayIconColor = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.WorkTrayIconColor);
+            BreakTrayIconColor = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.BreakTrayIconColor);
         }
 
         private void _musicPlayer_MediaEnded1(object sender, EventArgs e)
@@ -297,7 +297,7 @@ namespace YAPA
 
             var startTask = new JumpTask();
             startTask.Title = "Start";
-            startTask.Description = "Start Pomodoro session";
+            startTask.Description = "Start session";
             startTask.ApplicationPath = Assembly.GetEntryAssembly().Location;
             startTask.Arguments = "/start";
             startTask.IconResourceIndex = 7;
@@ -305,7 +305,7 @@ namespace YAPA
 
             var pauseTask = new JumpTask();
             pauseTask.Title = "Pause";
-            pauseTask.Description = "Pause Pomodoro session";
+            pauseTask.Description = "Pause session";
             pauseTask.ApplicationPath = Assembly.GetEntryAssembly().Location;
             pauseTask.Arguments = "/pause";
             pauseTask.IconResourceIndex = 3;
@@ -313,7 +313,7 @@ namespace YAPA
 
             var stopTask = new JumpTask();
             stopTask.Title = "Restart";
-            stopTask.Description = "Restart current Pomodori session";
+            stopTask.Description = "Restart current session";
             stopTask.ApplicationPath = Assembly.GetEntryAssembly().Location;
             stopTask.Arguments = "/restart";
             stopTask.IconResourceIndex = 4;
@@ -321,7 +321,7 @@ namespace YAPA
 
             var resetTask = new JumpTask();
             resetTask.Title = "Start from the beginning";
-            resetTask.Description = "Start new Pomodoro session";
+            resetTask.Description = "Start new session";
             resetTask.ApplicationPath = Assembly.GetEntryAssembly().Location;
             resetTask.Arguments = "/reset";
             resetTask.IconResourceIndex = 2;
@@ -329,7 +329,7 @@ namespace YAPA
 
             var settingsTask = new JumpTask();
             settingsTask.Title = "Settings";
-            settingsTask.Description = "Show YAPA settings";
+            settingsTask.Description = "Show settings";
             settingsTask.ApplicationPath = Assembly.GetEntryAssembly().Location;
             settingsTask.Arguments = "/settings";
             settingsTask.IconResourceIndex = 5;
@@ -414,7 +414,7 @@ namespace YAPA
             set
             {
                 Properties.Settings.Default.SoundNotification = value;
-                RaisePropertyChanged("UseSoundEfects");
+                RaisePropertyChanged("UseSoundEffects");
             }
         }
 
@@ -485,7 +485,7 @@ namespace YAPA
             set
             {
                 Properties.Settings.Default.RepeatBreakMusic = value;
-                RaisePropertyChanged("WorkMusic");
+                RaisePropertyChanged("RepeatBreakMusic");
             }
         }
 
@@ -496,7 +496,7 @@ namespace YAPA
             set
             {
                 Properties.Settings.Default.PeriodWork = value;
-                RaisePropertyChanged("WorkTime");
+                RaisePropertyChanged("PeriodWork");
             }
         }
 
@@ -506,7 +506,7 @@ namespace YAPA
             set
             {
                 Properties.Settings.Default.PeriodShortBreak = value;
-                RaisePropertyChanged("BreakTime");
+                RaisePropertyChanged("PeriodShortBreak");
             }
         }
 
@@ -516,7 +516,7 @@ namespace YAPA
             set
             {
                 Properties.Settings.Default.PeriodLongBreak = value;
-                RaisePropertyChanged("BreakLongTime");
+                RaisePropertyChanged("PeriodLongBreak");
             }
         }
 
@@ -556,6 +556,19 @@ namespace YAPA
             }
         }
 
+        public bool AutoStartWork
+        {
+            get
+            {
+                return Properties.Settings.Default.AutoStartWork;
+            }
+            set
+            {
+                Properties.Settings.Default.AutoStartWork = value;
+                RaisePropertyChanged("AutoStartWork");
+            }
+        }
+
         public string ProgressState
         {
             get { return _progressState; }
@@ -571,7 +584,7 @@ namespace YAPA
             set
             {
                 CurrentTime.Text = value;
-                Title = String.Format("YAPA - {0}", value);
+                Title = string.Format("YAPA - {0}", value);
             }
         }
 
@@ -680,6 +693,7 @@ namespace YAPA
                 if (_isWork)
                 {
                     _itemRepository.CompletePomodoro();
+                    if (AutoStartWork) Start_Click(this, null);
                 }
 
                 StopTicking();
@@ -795,13 +809,11 @@ namespace YAPA
                 {
                     if (!_stopWatch.IsRunning)
                     {
-                        if (SoundEffects)
-                            _tickSound.Play();
+                        if (SoundEffects) _tickSound.Play();
                         TimerFlush.Stop(this);
                         _stopWatch.Start();
                         _dispacherTime.Start();
-                        if (_isWork)
-                            _period++;
+                        if (_isWork) _period++;
                     }
                 }
                 else if ((args[1].ToLowerInvariant() == "/pause"))
@@ -822,8 +834,7 @@ namespace YAPA
                 {
                     if (_stopWatch.IsRunning)
                     {
-                        if (SoundEffects)
-                            _tickSound.Play();
+                        if (SoundEffects) _tickSound.Play();
                         _ticks = 0;
                         _stopWatch.Restart();
                     }
@@ -849,7 +860,7 @@ namespace YAPA
         {
             if (_stopWatch.IsRunning)
             {
-                if (MessageBox.Show("Are you sure you want to exit and cancel pomodoro ?", "Cancel pomodoro", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                if (MessageBox.Show("Are you sure you want to exit and cancel this session?", "Cancel timer", MessageBoxButton.YesNo) == MessageBoxResult.No)
                 {
                     return;
                 }

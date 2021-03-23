@@ -28,7 +28,7 @@ namespace YAPA
         private int _workTime;
         private int _breakTime;
         private int _breakLongTime;
-        private bool _soundEfects;
+        private bool _soundEffects;
         private bool _countBackwards;
         private bool _minimizeToTray;
         private ItemRepository _itemRepository;
@@ -37,6 +37,7 @@ namespace YAPA
         private string _breakMusic;
         private bool _repeatBreakMusic;
         private bool _autoStartBreak;
+        private bool _autoStartWork;
         private bool _isDirty;
 
         // INPC support
@@ -45,13 +46,13 @@ namespace YAPA
         /// <summary>
         /// Window constructor.
         /// </summary>
-        public Settings(IMainViewModel host, double currentOpacity, Brush currentTextColor, int workTime, int breakTime, int breakLongTime, bool soundEfects, double shadowOpacity, bool countBackwards, bool minimizeToTray, string workMusic, string breakMusic, bool repeatWorkMusic, bool repeatBreakMusic, bool autoStartBreak)
+        public Settings(IMainViewModel host, double currentOpacity, Brush currentTextColor, int workTime, int breakTime, int breakLongTime, bool soundEffects, double shadowOpacity, bool countBackwards, bool minimizeToTray, string workMusic, string breakMusic, bool repeatWorkMusic, bool repeatBreakMusic, bool autoStartBreak, bool autoStartWork)
         {
             InitializeComponent();
             DataContext = this;
             _host = host;
             _useWhiteText = true;
-            _soundEfects = soundEfects;
+            _soundEffects = soundEffects;
             _clockOpacity = currentOpacity;
             _saveSettings = new SaveSettings(this);
             _dismissSettings = new DismissSettings(this);
@@ -69,6 +70,7 @@ namespace YAPA
             _repeatBreakMusic = repeatBreakMusic;
             _repeatWorkMusic = repeatWorkMusic;
             _autoStartBreak = autoStartBreak;
+            _autoStartWork = autoStartWork;
             _isDirty = false;
 
             Loaded += Settings_Loaded;
@@ -242,14 +244,14 @@ namespace YAPA
             }
         }
 
-        public bool SoundEfects
+        public bool SoundEffects
         {
-            get { return _soundEfects; }
+            get { return _soundEffects; }
             set
             {
-                _soundEfects = value;
+                _soundEffects = value;
                 _host.SoundEffects = value;
-                RaisePropertyChanged("SoundEfects");
+                RaisePropertyChanged("SoundEffects");
             }
         }
 
@@ -356,6 +358,20 @@ namespace YAPA
                 _autoStartBreak = value;
                 _host.AutoStartBreak = value;
                 RaisePropertyChanged("AutoStartBreak");
+            }
+        }
+
+        public bool AutoStartWork
+        {
+            get
+            {
+                return _autoStartWork;
+            }
+            set
+            {
+                _autoStartWork = value;
+                _host.AutoStartWork = value;
+                RaisePropertyChanged("AutoStartWork");
             }
         }
 
