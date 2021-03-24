@@ -98,6 +98,8 @@ namespace YAPA
 
             WorkTrayIconColor = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.WorkTrayIconColor);
             BreakTrayIconColor = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.BreakTrayIconColor);
+
+
         }
 
         private void _musicPlayer_MediaEnded1(object sender, EventArgs e)
@@ -229,6 +231,10 @@ namespace YAPA
             {
                 Hide();
                 sysTrayIcon.Visible = true;
+            }
+            if (Properties.Settings.Default.StartOnLoad)
+            {
+                Start_Click(this, null);
             }
         }
 
@@ -543,6 +549,19 @@ namespace YAPA
             }
         }
 
+        public bool StartOnLoad
+        {
+            get
+            {
+                return Properties.Settings.Default.StartOnLoad;
+            }
+            set
+            {
+                Properties.Settings.Default.StartOnLoad = value;
+                RaisePropertyChanged("StartOnLoad");
+            }
+        }
+
         public bool AutoStartBreak
         {
             get
@@ -631,8 +650,7 @@ namespace YAPA
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            if (SoundEffects)
-                _tickSound.Play();
+            if (SoundEffects) _tickSound.Play();
             PlayMusic();
 
             TimerFlush.Stop(this);
@@ -650,10 +668,8 @@ namespace YAPA
                     _period++;
                     CurrentPeriodIcon.Text = Const.ICON_PERIOD_POMODORO;
                 }
-                if(_isBreak)
-                    CurrentPeriodIcon.Text = Const.ICON_PERIOD_BREAK;
-                if (_isBreakLong)
-                    CurrentPeriodIcon.Text = Const.ICON_PERIOD_BREAK_LONG;
+                if(_isBreak) CurrentPeriodIcon.Text = Const.ICON_PERIOD_BREAK;
+                if (_isBreakLong) CurrentPeriodIcon.Text = Const.ICON_PERIOD_BREAK_LONG;
             }
         }
 
@@ -693,13 +709,12 @@ namespace YAPA
                 if (_isWork)
                 {
                     _itemRepository.CompletePomodoro();
-                    if (AutoStartWork) Start_Click(this, null);
                 }
 
                 StopTicking();
                 PauseMusic();
 
-                if (!_isWork && AutoStartBreak)
+                if ((!_isWork && AutoStartBreak) || (_isWork && AutoStartWork))
                 {
                     Start_Click(this, null);
                 }

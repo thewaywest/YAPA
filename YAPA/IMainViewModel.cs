@@ -80,6 +80,7 @@ namespace YAPA
         string BreakMusic { get; set; }
 
         bool RepeatBreakMusic { get; set; }
+        bool StartOnLoad { get; set; }
         bool AutoStartBreak { get; set; }
         bool AutoStartWork { get; set; }
     }

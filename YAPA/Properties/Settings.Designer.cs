@@ -322,5 +322,17 @@ namespace YAPA.Properties {
                 this["StartInSystemTray"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StartOnLoad {
+            get {
+                return ((bool)(this["StartOnLoad"]));
+            }
+            set {
+                this["StartOnLoad"] = value;
+            }
+        }
     }
 }
