@@ -37,6 +37,7 @@ namespace YAPA
         private string _breakMusic;
         private bool _repeatBreakMusic;
         private bool _startOnLoad;
+        private bool _startInSystemTray;
         private bool _autoStartBreak;
         private bool _autoStartWork;
         private bool _isDirty;
@@ -47,7 +48,7 @@ namespace YAPA
         /// <summary>
         /// Window constructor.
         /// </summary>
-        public Settings(IMainViewModel host, double currentOpacity, Brush currentTextColor, int workTime, int breakTime, int breakLongTime, bool soundEffects, double shadowOpacity, bool countBackwards, bool minimizeToTray, string workMusic, string breakMusic, bool repeatWorkMusic, bool repeatBreakMusic, bool autoStartBreak, bool autoStartWork, bool startOnLoad)
+        public Settings(IMainViewModel host, double currentOpacity, Brush currentTextColor, int workTime, int breakTime, int breakLongTime, bool soundEffects, double shadowOpacity, bool countBackwards, bool minimizeToTray, string workMusic, string breakMusic, bool repeatWorkMusic, bool repeatBreakMusic, bool autoStartBreak, bool autoStartWork, bool startOnLoad, bool startInSystemTray)
         {
             InitializeComponent();
             DataContext = this;
@@ -71,6 +72,7 @@ namespace YAPA
             _repeatBreakMusic = repeatBreakMusic;
             _repeatWorkMusic = repeatWorkMusic;
             _startOnLoad = startOnLoad;
+            _startInSystemTray = startInSystemTray;
             _autoStartBreak = autoStartBreak;
             _autoStartWork = autoStartWork;
             _isDirty = false;
@@ -346,6 +348,20 @@ namespace YAPA
                 _countBackwards = value;
                 _host.CountBackwards = value;
                 RaisePropertyChanged("CountBackwards");
+            }
+        }
+
+        public bool StartInSystemTray
+        {
+            get
+            {
+                return _startInSystemTray;
+            }
+            set
+            {
+                _startInSystemTray = value;
+                _host.StartInSystemTray = value;
+                RaisePropertyChanged("StartInSystemTray");
             }
         }
 

@@ -549,6 +549,19 @@ namespace YAPA
             }
         }
 
+        public bool StartInSystemTray
+        {
+            get
+            {
+                return Properties.Settings.Default.StartInSystemTray;
+            }
+            set
+            {
+                Properties.Settings.Default.StartInSystemTray = value;
+                RaisePropertyChanged("StartInSystemTray");
+            }
+        }
+
         public bool StartOnLoad
         {
             get

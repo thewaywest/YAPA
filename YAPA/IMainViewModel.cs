@@ -81,6 +81,7 @@ namespace YAPA
 
         bool RepeatBreakMusic { get; set; }
         bool StartOnLoad { get; set; }
+        bool StartInSystemTray { get; set; }
         bool AutoStartBreak { get; set; }
         bool AutoStartWork { get; set; }
     }
