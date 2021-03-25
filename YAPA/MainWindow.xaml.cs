@@ -221,7 +221,7 @@ namespace YAPA
 
             sysTrayIcon = new System.Windows.Forms.NotifyIcon();
             sysTrayIcon.Text = "YAPA";
-            sysTrayIcon.Icon = new System.Drawing.Icon(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Resources\pomoTray.ico"), 40, 40);
+            sysTrayIcon.Icon = new System.Drawing.Icon(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Resources\lotoTray.ico"), 40, 40);
             sysTrayIcon.Visible = false;
             sysTrayIcon.DoubleClick += SysTrayIcon_DoubleClick;
 
