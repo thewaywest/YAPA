@@ -117,10 +117,6 @@ namespace YAPA
         /// <param name="playWork">true - work, false - break, null - use _isWork</param>
         private void PlayMusic(bool? playWork = null)
         {
-            if (SoundEffects == false)
-            {
-                return;
-            }
             var workMusic = playWork ?? _isWork;
             var musicPath = workMusic ? WorkMusic : BreakMusic;
 
