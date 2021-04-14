@@ -49,6 +49,7 @@ namespace YAPA
 
         private System.Drawing.Color WorkTrayIconColor;
         private System.Drawing.Color BreakTrayIconColor;
+        private System.Drawing.Color LongBreakTrayIconColor;
 
         private MediaPlayer _musicPlayer;
         // For INCP
@@ -98,13 +99,13 @@ namespace YAPA
 
             WorkTrayIconColor = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.WorkTrayIconColor);
             BreakTrayIconColor = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.BreakTrayIconColor);
-
+            LongBreakTrayIconColor = System.Drawing.ColorTranslator.FromHtml(Properties.Settings.Default.LongBreakTrayIconColor);
 
         }
 
         private void _musicPlayer_MediaEnded1(object sender, EventArgs e)
         {
-            var repeat = _isWork ? RepeatWorkMusic : RepeatBreakMusic;
+            var repeat = _isWork ? RepeatWorkMusic : _isBreakLong ? RepeatLongBreakMusic : RepeatBreakMusic;
             if (repeat && _musicPlayer.Source != null && File.Exists(_musicPlayer.Source.AbsolutePath))
             {
                 _musicPlayer.Play();
@@ -115,11 +116,10 @@ namespace YAPA
         /// 
         /// </summary>
         /// <param name="playWork">true - work, false - break, null - use _isWork</param>
-        private void PlayMusic(bool? playWork = null)
+        private void PlayMusic(bool? playWork = null, bool? longBreak = null)
         {
             var workMusic = playWork ?? _isWork;
-            var musicPath = workMusic ? WorkMusic : BreakMusic;
-
+            var musicPath = workMusic ? WorkMusic : (longBreak ?? _isBreakLong) ? LongBreakMusic : BreakMusic;
 
             if (!File.Exists(musicPath))
             {
@@ -268,6 +268,10 @@ namespace YAPA
             if (_isWork)
             {
                 textColor = WorkTrayIconColor;
+            }
+            else if (_isBreakLong)
+            {
+                textColor = LongBreakTrayIconColor;
             }
             else
             {
@@ -488,6 +492,26 @@ namespace YAPA
             {
                 Properties.Settings.Default.RepeatBreakMusic = value;
                 RaisePropertyChanged("RepeatBreakMusic");
+            }
+        }
+
+        public string LongBreakMusic
+        {
+            get { return Properties.Settings.Default.LongBreakMusic; }
+            set
+            {
+                Properties.Settings.Default.LongBreakMusic = value;
+                RaisePropertyChanged("LongBreakMusic");
+            }
+        }
+
+        public bool RepeatLongBreakMusic
+        {
+            get { return Properties.Settings.Default.RepeatLongBreakMusic; }
+            set
+            {
+                Properties.Settings.Default.RepeatLongBreakMusic = value;
+                RaisePropertyChanged("RepeatLongBreakMusic");
             }
         }
 

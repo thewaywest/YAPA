@@ -9,21 +9,25 @@
         mc:Ignorable="d" 
         x:Class="YAPA.Settings"
         Title="YAPA Settings" 
-        Height="630" 
-        Width="450"
+        Height="655.333" 
+        Width="437.333"
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
         Closing="Settings_Closing">
-    <Grid Background="Transparent">
-        <Border Margin="10">
+    <Grid Background="Transparent" Margin="0,0,0,-44" Height="674" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <Border Margin="10,10,10,0">
             <Border.Effect>
                 <DropShadowEffect Color="Black" Direction="315" 
                                         ShadowDepth="0" Opacity=".5" BlurRadius="20" />
             </Border.Effect>
-            <Grid Background="White" Margin="0,0,0,29">
+            <Grid Background="White" Margin="0,0,0,40">
 
                 <StackPanel Orientation="Vertical" >
 
@@ -173,6 +177,13 @@
                             </StackPanel>
                             <TextBox Grid.Row="3" Grid.Column="0" Text="{Binding BreakMusic, Mode=TwoWay}" Margin="5,0,0,15" />
                             <Button Grid.Row="3" Grid.Column="1" Content="Browse" Margin="5,0,0,15" x:Name="BrowseBreakMusic" Click="BrowseBreakMusic_OnClick"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,36,0,-27">
+                                <Label Content="Long break music (repeat" Width="145" />
+                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding LongRepeatBreakMusic, Mode=TwoWay}" Margin="0,6"/>
+                                <Label Content="):" Width="19"/>
+                            </StackPanel>
+                            <TextBox Grid.Row="3" Grid.Column="0" Text="{Binding LongBreakMusic, Mode=TwoWay}" Margin="5,62,0,-47" />
+                            <Button Grid.Row="3" Grid.Column="1" Content="Browse" Margin="5,62,0,-47" x:Name="BrowseLongBreakMusic" Click="BrowseLongBreakMusic_OnClick"/>
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -181,7 +192,7 @@
             		Content="Save"
             		Cursor="Hand"
             		ToolTip="Save settings"
-            		Margin="351,541,10,10" RenderTransformOrigin="0.478,0.513">
+            		Margin="361,592,0,10" RenderTransformOrigin="0.478,0.513" Click="btnClose_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <TextBlock Text="{TemplateBinding Content}" 

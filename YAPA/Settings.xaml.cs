@@ -36,6 +36,8 @@ namespace YAPA
         private bool _repeatWorkMusic;
         private string _breakMusic;
         private bool _repeatBreakMusic;
+        private string _longBreakMusic;
+        private bool _repeatLongBreakMusic;
         private bool _startOnLoad;
         private bool _startInSystemTray;
         private bool _autoStartBreak;
@@ -48,7 +50,7 @@ namespace YAPA
         /// <summary>
         /// Window constructor.
         /// </summary>
-        public Settings(IMainViewModel host, double currentOpacity, Brush currentTextColor, int workTime, int breakTime, int breakLongTime, bool soundEffects, double shadowOpacity, bool countBackwards, bool minimizeToTray, string workMusic, string breakMusic, bool repeatWorkMusic, bool repeatBreakMusic, bool autoStartBreak, bool autoStartWork, bool startOnLoad, bool startInSystemTray)
+        public Settings(IMainViewModel host, double currentOpacity, Brush currentTextColor, int workTime, int breakTime, int breakLongTime, bool soundEffects, double shadowOpacity, bool countBackwards, bool minimizeToTray, string workMusic, string breakMusic, string longBreakMusic, bool repeatWorkMusic, bool repeatBreakMusic, bool repeatLongBreakMusic, bool autoStartBreak, bool autoStartWork, bool startOnLoad, bool startInSystemTray)
         {
             InitializeComponent();
             DataContext = this;
@@ -68,9 +70,11 @@ namespace YAPA
             MouseLeftButtonDown += Settings_MouseLeftButtonDown;
             _itemRepository = new ItemRepository();
             _workMusic = workMusic;
+            _repeatWorkMusic = repeatWorkMusic;
             _breakMusic = breakMusic;
             _repeatBreakMusic = repeatBreakMusic;
-            _repeatWorkMusic = repeatWorkMusic;
+            _longBreakMusic = longBreakMusic;
+            _repeatLongBreakMusic = repeatLongBreakMusic;
             _startOnLoad = startOnLoad;
             _startInSystemTray = startInSystemTray;
             _autoStartBreak = autoStartBreak;
@@ -303,6 +307,27 @@ namespace YAPA
             }
         }
 
+        public string LongBreakMusic
+        {
+            get { return _longBreakMusic; }
+            set
+            {
+                _longBreakMusic = value;
+                _host.LongBreakMusic = value;
+                RaisePropertyChanged("LongBreakMusic");
+            }
+        }
+
+        public bool RepeatLongBreakMusic
+        {
+            get { return _repeatLongBreakMusic; }
+            set
+            {
+                _repeatLongBreakMusic = value;
+                _host.RepeatLongBreakMusic = value;
+                RaisePropertyChanged("RepeatLongBreakMusic");
+            }
+        }
 
         public string WorkMusic
         {
@@ -500,13 +525,21 @@ namespace YAPA
             return null;
         }
 
-
         private void BrowseBreakMusic_OnClick(object sender, RoutedEventArgs e)
         {
             var fileName = BrowseForFile();
             if (string.IsNullOrEmpty(fileName) == false)
             {
                 BreakMusic = fileName;
+            }
+        }
+
+        private void BrowseLongBreakMusic_OnClick(object sender, RoutedEventArgs e)
+        {
+            var fileName = BrowseForFile();
+            if (string.IsNullOrEmpty(fileName) == false)
+            {
+                LongBreakMusic = fileName;
             }
         }
 

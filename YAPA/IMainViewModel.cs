@@ -79,7 +79,13 @@ namespace YAPA
         /// </summary>
         string BreakMusic { get; set; }
 
+        /// <summary>
+        /// Music to play on long break -- defaults to Break Music
+        /// </summary>
+        string LongBreakMusic { get; set; }
+
         bool RepeatBreakMusic { get; set; }
+        bool RepeatLongBreakMusic { get; set; }
         bool StartOnLoad { get; set; }
         bool StartInSystemTray { get; set; }
         bool AutoStartBreak { get; set; }

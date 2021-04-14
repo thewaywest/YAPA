@@ -229,6 +229,18 @@ namespace YAPA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#00ffff")]
+        public string LongBreakTrayIconColor {
+            get {
+                return ((string)(this["LongBreakTrayIconColor"]));
+            }
+            set {
+                this["LongBreakTrayIconColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#00802b")]
         public string WorkTrayIconColor {
             get {
@@ -265,6 +277,18 @@ namespace YAPA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LongBreakMusic {
+            get {
+                return ((string)(this["LongBreakMusic"]));
+            }
+            set {
+                this["LongBreakMusic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool RepeatWorkMusic {
             get {
@@ -284,6 +308,18 @@ namespace YAPA.Properties {
             }
             set {
                 this["RepeatBreakMusic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RepeatLongBreakMusic {
+            get {
+                return ((bool)(this["RepeatLongBreakMusic"]));
+            }
+            set {
+                this["RepeatLongBreakMusic"] = value;
             }
         }
         

@@ -37,7 +37,7 @@ namespace YAPA
         public void Execute(object parameter)
         {
             // show settings window
-            var settingsWindow = new Settings(_host, _host.ClockOpacity, _host.TextBrush, _host.WorkTime, _host.BreakTime, _host.BreakLongTime, _host.SoundEffects, _host.ShadowOpacity, _host.CountBackwards, _host.MinimizeToTray, _host.WorkMusic, _host.BreakMusic, _host.RepeatWorkMusic, _host.RepeatBreakMusic, _host.AutoStartBreak, _host.AutoStartWork, _host.StartOnLoad, _host.StartInSystemTray);
+            var settingsWindow = new Settings(_host, _host.ClockOpacity, _host.TextBrush, _host.WorkTime, _host.BreakTime, _host.BreakLongTime, _host.SoundEffects, _host.ShadowOpacity, _host.CountBackwards, _host.MinimizeToTray, _host.WorkMusic, _host.BreakMusic, _host.LongBreakMusic, _host.RepeatWorkMusic, _host.RepeatBreakMusic, _host.RepeatLongBreakMusic, _host.AutoStartBreak, _host.AutoStartWork, _host.StartOnLoad, _host.StartInSystemTray);
             settingsWindow.ShowDialog();
         }
     }
