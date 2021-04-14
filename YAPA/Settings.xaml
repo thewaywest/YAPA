@@ -192,7 +192,7 @@
             		Content="Save"
             		Cursor="Hand"
             		ToolTip="Save settings"
-            		Margin="361,592,0,10" RenderTransformOrigin="0.478,0.513" Click="btnClose_Click">
+            		Margin="361,592,0,10" RenderTransformOrigin="0.478,0.513">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <TextBlock Text="{TemplateBinding Content}" 
